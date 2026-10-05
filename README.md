@@ -32,6 +32,7 @@ Alliance-Hypergraph-Visualizer/
 ├── sample_data/
 │   ├── sample_alliances.json
 │   └── sample_figure.png
+├── alliance_data_analyzer.py
 ├── alliance_data_editor.py
 ├── alliance_data_visualizer.py
 ├── alliance_json_format.md
@@ -42,6 +43,7 @@ Alliance-Hypergraph-Visualizer/
 ```
 
 - `alliance_data_editor.py` — Loads, modifies, and saves alliance data.
+- `alliance_data_analyzer.py` — Analyzes statistics and features of alliance data.
 - `alliance_data_visualizer.py` — Generates an XGI hypergraph visualization from an HIF dataset.
 - `cli.py` — Provides the command-line interface for interacting with the application.
 - `alliance_json_format.md` — Documents the JSON/HIF structure used by the application.
