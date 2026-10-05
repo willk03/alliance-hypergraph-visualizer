@@ -24,6 +24,34 @@
                 "name": "Courtney",
                 "tribe": "Black"
             }
+        },
+        {
+            "node": "player-004",
+            "attrs": {
+                "name": "Dylan",
+                "tribe": "Black"
+            }
+        },
+        {
+            "node": "player-005",
+            "attrs": {
+                "name": "Alara",
+                "tribe": "Red"
+            }
+        },
+        {
+            "node": "player-006",
+            "attrs": {
+                "name": "Jaden",
+                "tribe": "Red"
+            }
+        },
+        {
+            "node": "player-007",
+            "attrs": {
+                "name": "Ryan",
+                "tribe": "Black"
+            }
         }
     ],
     "edges": [
@@ -39,6 +67,55 @@
             "attrs": {
                 "name": "Love Island Rob Fan Club",
                 "created_round": 2
+            }
+        },
+        {
+            "edge": "alliance-003",
+            "attrs": {
+                "name": "Sample Alliance Chat",
+                "created_round": "1"
+            }
+        },
+        {
+            "edge": "alliance-004",
+            "attrs": {
+                "name": "Sample Alliance Chat",
+                "created_round": "2"
+            }
+        },
+        {
+            "edge": "alliance-005",
+            "attrs": {
+                "name": "Sample Alliance Chat",
+                "created_round": "3"
+            }
+        },
+        {
+            "edge": "alliance-006",
+            "attrs": {
+                "name": "Sample Alliance Chat",
+                "created_round": "2"
+            }
+        },
+        {
+            "edge": "alliance-007",
+            "attrs": {
+                "name": "Best Three",
+                "created_round": "1"
+            }
+        },
+        {
+            "edge": "alliance-008",
+            "attrs": {
+                "name": "Besties",
+                "created_round": "1"
+            }
+        },
+        {
+            "edge": "alliance-009",
+            "attrs": {
+                "name": "f2",
+                "created_round": "4"
             }
         }
     ],
@@ -62,6 +139,66 @@
         {
             "edge": "alliance-002",
             "node": "player-002"
+        },
+        {
+            "edge": "alliance-003",
+            "node": "player-004"
+        },
+        {
+            "edge": "alliance-003",
+            "node": "player-005"
+        },
+        {
+            "edge": "alliance-004",
+            "node": "player-004"
+        },
+        {
+            "edge": "alliance-004",
+            "node": "player-001"
+        },
+        {
+            "edge": "alliance-005",
+            "node": "player-004"
+        },
+        {
+            "edge": "alliance-005",
+            "node": "player-003"
+        },
+        {
+            "edge": "alliance-006",
+            "node": "player-004"
+        },
+        {
+            "edge": "alliance-006",
+            "node": "player-002"
+        },
+        {
+            "edge": "alliance-007",
+            "node": "player-004"
+        },
+        {
+            "edge": "alliance-007",
+            "node": "player-001"
+        },
+        {
+            "edge": "alliance-007",
+            "node": "player-005"
+        },
+        {
+            "edge": "alliance-008",
+            "node": "player-006"
+        },
+        {
+            "edge": "alliance-008",
+            "node": "player-001"
+        },
+        {
+            "edge": "alliance-009",
+            "node": "player-007"
+        },
+        {
+            "edge": "alliance-009",
+            "node": "player-003"
         }
     ]
 }
