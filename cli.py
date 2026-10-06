@@ -34,7 +34,7 @@ def main():
         elif choice == "4":
             list_alliances()
         elif choice == "5":
-            alliance_data_visualizer.show_hypergraph(data_path, seed, k)
+            alliance_data_visualizer.show_full_hypergraph(data_path, seed, k)
         elif choice == "6":
             change_seed()
         elif choice == "7":
