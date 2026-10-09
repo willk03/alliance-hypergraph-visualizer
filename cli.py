@@ -2,6 +2,7 @@ from alliance_data_editor import AllianceDataEditor
 import alliance_data_visualizer
 
 import os
+import random
 
 data_path = "sample_data/sample_alliances.json"
 alliance_data_editor = AllianceDataEditor(data_path)
@@ -77,13 +78,16 @@ def edit_seed_cli_path():
     while True:
         print("\nEdit Seed")
         print("1. Change Graph Seed")
-        print("2. Exit")
+        print("2. Random Seed")
+        print("3. Exit")
 
         choice = input("Choose an option: ").strip()
 
         if choice == "1":
             change_seed()
         elif choice == "2":
+            random_seed()
+        elif choice == "3":
             return
     
 def add_alliance():
@@ -124,6 +128,13 @@ def change_seed():
     if new_k == -1:
         new_k = 0.35
     k = new_k
+    
+def random_seed():
+    new_seed = random.randint(0, 100000)
+    print(f"Random Seed: {new_seed}")
+    
+    global seed
+    seed = new_seed
     
 def change_path():
     new_path = input("Enter New Path: ")
