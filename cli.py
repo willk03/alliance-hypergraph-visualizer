@@ -13,23 +13,36 @@ k = 0.35
 def main():
     while True:
         print("\nAlliance Chat Visualizer")
+        print("1. Edit Data")
+        print("2. View Data")
+        print("3. Edit Seed")
+        print("4. Change Path")
+        print("5. Exit")
+
+        choice = input("Choose an option: ").strip()
+        
+        if choice == "1":
+            edit_data_cli_path()
+        elif choice == "2":
+            view_data_cli_path()
+        elif choice == "3":
+            edit_seed_cli_path()
+        elif choice == "4":
+            change_path()
+        elif choice == "5":
+            break
+            
+def edit_data_cli_path():
+    while True:
+        print("\nEdit Alliance Chat Data")
         print("1. Add Alliance Chat")
         print("2. Remove Alliance Chat")
         print("3. Remove Player")
         print("4. List Alliance Chats")
-        print("5. Show Graph")
-        print("6. Change Graph Seed")
-        print("7. Save")
-        print("8. Change Path")
-        print("9. Exit")
+        print("5. Save")
+        print("6. Exit")
 
         choice = input("Choose an option: ").strip()
-        
-        #1: edit data
-        #2: view data
-        #3: edit seed
-        #4: change path
-        #5: exit
 
         if choice == "1":
             add_alliance()
@@ -40,19 +53,38 @@ def main():
         elif choice == "4":
             list_alliances()
         elif choice == "5":
-            alliance_data_visualizer.show_full_hypergraph(data_path, seed, k)
-        elif choice == "6":
-            change_seed()
-        elif choice == "7":
             alliance_data_editor.save_data()
-        elif choice == "8":
-            change_path()
-        elif choice == "9":
-            break
-            
+        elif choice == "6":
+            return
 
-def clear_console():
-    os.system("cls" if os.name == "nt" else "clear")
+def view_data_cli_path():
+    while True:
+        print("\nView Alliance Chat Data")
+        print("1. List Alliance Chats")
+        print("2. Show Graph")
+        print("3. Exit")
+
+        choice = input("Choose an option: ").strip()
+        
+        if choice == "1":
+            list_alliances()
+        elif choice == "2":
+            alliance_data_visualizer.show_full_hypergraph(data_path, seed, k)
+        elif choice == "3":
+            return
+
+def edit_seed_cli_path():
+    while True:
+        print("\nEdit Seed")
+        print("1. Change Graph Seed")
+        print("2. Exit")
+
+        choice = input("Choose an option: ").strip()
+
+        if choice == "1":
+            change_seed()
+        elif choice == "2":
+            return
     
 def add_alliance():
     name = input("Alliance Chat Name: ").strip()
