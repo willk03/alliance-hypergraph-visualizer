@@ -41,7 +41,7 @@ def edit_data_cli_path():
         print("3. Remove Player")
         print("4. List Alliance Chats")
         print("5. Save")
-        print("6. Exit")
+        print("6. Back")
 
         choice = input("Choose an option: ").strip()
 
@@ -64,7 +64,7 @@ def view_data_cli_path():
         print("1. List Alliance Chats")
         print("2. Show Graph")
         print("3. Show Tribe Graph")
-        print("4. Exit")
+        print("4. Back")
 
         choice = input("Choose an option: ").strip()
         
@@ -82,7 +82,7 @@ def edit_seed_cli_path():
         print("\nEdit Seed")
         print("1. Change Graph Seed")
         print("2. Random Seed")
-        print("3. Exit")
+        print("3. Back")
 
         choice = input("Choose an option: ").strip()
 
