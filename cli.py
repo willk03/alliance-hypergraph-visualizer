@@ -24,6 +24,12 @@ def main():
         print("9. Exit")
 
         choice = input("Choose an option: ").strip()
+        
+        #1: edit data
+        #2: view data
+        #3: edit seed
+        #4: change path
+        #5: exit
 
         if choice == "1":
             add_alliance()
@@ -78,11 +84,13 @@ def list_alliances():
     
 def change_seed():
     new_seed = int(input("New Seed: "))
-    new_k = float(input("New K: "))
+    new_k = float(input("New K (-1 for default): "))
     
     global seed, k
     
     seed = new_seed
+    if new_k == -1:
+        new_k = 0.35
     k = new_k
     
 def change_path():
