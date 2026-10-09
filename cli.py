@@ -1,4 +1,5 @@
 from alliance_data_editor import AllianceDataEditor
+from alliance_data_analyzer import AllianceDataAnalyzer
 import alliance_data_visualizer
 
 import os
@@ -7,6 +8,7 @@ import random
 data_path = "sample_data/sample_alliances.json"
 alliance_data_editor = AllianceDataEditor(data_path)
 alliance_data_editor.load_data()
+alliance_data_analyzer = AllianceDataAnalyzer(data_path)
 
 seed = 41
 k = 0.35
@@ -62,19 +64,23 @@ def view_data_cli_path():
     while True:
         print("\nView Alliance Chat Data")
         print("1. List Alliance Chats")
-        print("2. Show Graph")
-        print("3. Show Tribe Graph")
-        print("4. Back")
+        print("2. List Player Degrees")
+        print("3. Show Graph")
+        print("4. Show Tribe Graph")
+        print("5. Back")
 
         choice = input("Choose an option: ").strip()
         
         if choice == "1":
             list_alliances()
-        elif choice == "2":
-            alliance_data_visualizer.show_full_hypergraph(data_path, seed, k)
+        if choice == "2":
+            print() #newline
+            alliance_data_analyzer.print_sorted_degrees()
         elif choice == "3":
-            show_tribe_graph()
+            alliance_data_visualizer.show_full_hypergraph(data_path, seed, k)
         elif choice == "4":
+            show_tribe_graph()
+        elif choice == "5":
             return
 
 def edit_seed_cli_path():
@@ -148,10 +154,12 @@ def change_path():
     
     global data_path
     global alliance_data_editor
+    global alliance_data_analyzer
     
     data_path = new_path
     alliance_data_editor = AllianceDataEditor(data_path)
     alliance_data_editor.load_data()
+    alliance_data_analyzer = AllianceDataAnalyzer(data_path)
     
 if __name__ == "__main__":
     main()
