@@ -63,7 +63,8 @@ def view_data_cli_path():
         print("\nView Alliance Chat Data")
         print("1. List Alliance Chats")
         print("2. Show Graph")
-        print("3. Exit")
+        print("3. Show Tribe Graph")
+        print("4. Exit")
 
         choice = input("Choose an option: ").strip()
         
@@ -72,6 +73,8 @@ def view_data_cli_path():
         elif choice == "2":
             alliance_data_visualizer.show_full_hypergraph(data_path, seed, k)
         elif choice == "3":
+            show_tribe_graph()
+        elif choice == "4":
             return
 
 def edit_seed_cli_path():
@@ -117,6 +120,10 @@ def remove_player():
 def list_alliances():
     print()
     alliance_data_editor.list_alliance_chats()
+    
+def show_tribe_graph():
+    tribe = input("Tribe: ")
+    alliance_data_visualizer.show_tribe_hypergraph(data_path, seed, k, tribe)
     
 def change_seed():
     new_seed = int(input("New Seed: "))
