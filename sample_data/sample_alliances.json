@@ -1,7 +1,11 @@
 {
     "network-type": "undirected",
     "metadata": {
-        "name": "Sample Alliance Data"
+        "name": "Sample Alliance Data",
+        "tribe-colors": {
+            "Red": "#c73c2a",
+            "Black": "#6e6e6e"
+        }
     },
     "nodes": [
         {
