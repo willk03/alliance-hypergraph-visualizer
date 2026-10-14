@@ -23,7 +23,7 @@ def show_hypergraph(H, seed, k, title, is_weighted=False):
         blues = plt.get_cmap("Blues")
         cmap = mcolors.LinearSegmentedColormap.from_list(
             "truncated_blues",
-            blues(np.linspace(0.75, 1.0, 256))
+            blues(np.linspace(0.5, 1.0, 256))
         )
         
         xgi.draw(
@@ -117,4 +117,4 @@ def show_weighted_tribe_hypergraph(path, seed, k, tribe):
     
     
 if __name__ == "__main__":
-    show_tribe_hypergraph("data/season_19/r4_alliances.json", 41, 0.35, "Black Mambas")
+    show_weighted_hypergraph("data/season_19/r4_alliances.json", 42, 0.35)
