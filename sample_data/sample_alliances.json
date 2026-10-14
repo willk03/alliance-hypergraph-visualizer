@@ -59,14 +59,14 @@
             "edge": "alliance-001",
             "attrs": {
                 "name": "FTC",
-                "created_round": 1
+                "created_round": "1"
             }
         },
         {
             "edge": "alliance-002",
             "attrs": {
                 "name": "Love Island Rob Fan Club",
-                "created_round": 2
+                "created_round": "2"
             }
         },
         {

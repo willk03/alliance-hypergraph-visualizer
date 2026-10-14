@@ -67,7 +67,9 @@ def view_data_cli_path():
         print("2. List Player Degrees")
         print("3. Show Graph")
         print("4. Show Tribe Graph")
-        print("5. Back")
+        print("5. Show Weighted Graph")
+        print("6. Show Weighted Tribe Graph")
+        print("7. Back")
 
         choice = input("Choose an option: ").strip()
         
@@ -81,6 +83,10 @@ def view_data_cli_path():
         elif choice == "4":
             show_tribe_graph()
         elif choice == "5":
+            alliance_data_visualizer.show_weighted_hypergraph(data_path, seed, k)
+        elif choice == "6":
+            show_weighted_tribe_graph()
+        elif choice == "7":
             return
 
 def edit_seed_cli_path():
@@ -130,6 +136,10 @@ def list_alliances():
 def show_tribe_graph():
     tribe = input("Tribe: ")
     alliance_data_visualizer.show_tribe_hypergraph(data_path, seed, k, tribe)
+    
+def show_weighted_tribe_graph():
+    tribe = input("Tribe: ")
+    alliance_data_visualizer.show_weighted_tribe_hypergraph(data_path, seed, k, tribe)
     
 def change_seed():
     new_seed = int(input("New Seed: "))
