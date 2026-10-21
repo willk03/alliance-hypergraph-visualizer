@@ -2,10 +2,15 @@ import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
-from matplotlib.colors import ListedColormap
 
 import numpy as np
 import xgi
+
+#Labels/Legend
+#create fig/ax
+#create pos
+#set weights
+#draw with weights?
 
 def show_hypergraph(H, seed, k, title, is_weighted=False):
     labels = {node: str(int(node.removeprefix("player-0"))) for node in H.nodes}
@@ -26,6 +31,11 @@ def show_hypergraph(H, seed, k, title, is_weighted=False):
             blues(np.linspace(0.5, 1.0, 256))
         )
         
+        og_tribe_color = {
+            node: H["tribe-colors"][H.nodes[node]["og-tribe"]]
+            for node in H.nodes
+        }
+                
         xgi.draw(
             H,
             ax=ax,
@@ -37,7 +47,8 @@ def show_hypergraph(H, seed, k, title, is_weighted=False):
             dyad_color=weights,
             dyad_color_cmap=cmap,
             edge_fc=weights,
-            edge_fc_cmap=cmap
+            edge_fc_cmap=cmap,
+            node_fc= og_tribe_color
         )
     else:
         xgi.draw(
@@ -117,4 +128,4 @@ def show_weighted_tribe_hypergraph(path, seed, k, tribe):
     
     
 if __name__ == "__main__":
-    show_weighted_hypergraph("data/season_19/r4_alliances.json", 42, 0.35)
+    show_weighted_hypergraph("data/season_19/r4_alliances.json", 41, 0.35)
