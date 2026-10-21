@@ -2,10 +2,15 @@ import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
-from matplotlib.colors import ListedColormap
 
 import numpy as np
 import xgi
+
+#Labels/Legend
+#create fig/ax
+#create pos
+#set weights
+#draw with weights?
 
 def show_hypergraph(H, seed, k, title, is_weighted=False):
     labels = {node: str(int(node.removeprefix("player-0"))) for node in H.nodes}
