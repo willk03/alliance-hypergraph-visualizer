@@ -20,13 +20,24 @@
 {
   "network-type": "undirected",
   "metadata": {
-    "name": "Season Alliances"
+    "name": "Season Alliances",
+    "tribe-colors": {
+      "Red": "#ff0000",
+      "Black": "#000000",
+    },
+    "round-start": {
+    }
   },
   "nodes": [
     {
       "node": "player-001",
       "attrs": {
-        "name": "Alice"
+        "name": "Alice",
+        "tribe": {
+          "1": "Red",
+          "2": "Black"
+        },
+        "voted-out-round": "-1"
       }
     }
   ],
@@ -35,7 +46,8 @@
       "edge": "alliance-001",
       "attrs": {
         "name": "The Final Three",
-        "created_round": 4
+        "created": "2026-10-21T18:30:00",
+        "created-round": 1
       }
     }
   ],
