@@ -2,6 +2,7 @@ from alliance_data_editor import AllianceDataEditor
 from alliance_data_analyzer import AllianceDataAnalyzer
 import alliance_data_visualizer
 
+from datetime import datetime
 import os
 import random
 
@@ -170,6 +171,14 @@ def change_path():
     alliance_data_editor = AllianceDataEditor(data_path)
     alliance_data_editor.load_data()
     alliance_data_analyzer = AllianceDataAnalyzer(data_path)
+    
+def get_date_pattern():
+    while True:
+        raw = input("Date (YYYY-MM-DD HH:MM): ").strip()
+        try:
+            return datetime.strptime(raw, "%Y-%m-%d %H:%M")
+        except ValueError:
+            print("Invalid date/time. Try again.")
     
 if __name__ == "__main__":
     main()
