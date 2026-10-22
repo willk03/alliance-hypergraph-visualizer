@@ -44,10 +44,11 @@ def edit_data_cli_path():
         print("3. Remove Player")
         print("4. Edit Player Voted Out")
         print("5. Edit Player Tribes")
-        print("6. Edit Round Dates")
-        print("7. List Alliance Chats")
-        print("8. Save")
-        print("9. Back")
+        print("6. Copy Player Tribes")
+        print("7. Edit Round Dates")
+        print("8. List Alliance Chats")
+        print("9. Save")
+        print("10. Back")
 
         choice = input("Choose an option: ").strip()
 
@@ -62,12 +63,14 @@ def edit_data_cli_path():
         elif choice == "5":
             edit_player_tribes()
         elif choice == "6":
-            edit_round_dates()
+            copy_player_tribes()
         elif choice == "7":
-            list_alliances()
+            edit_round_dates()
         elif choice == "8":
-            alliance_data_editor.save_data()
+            list_alliances()
         elif choice == "9":
+            alliance_data_editor.save_data()
+        elif choice == "10":
             return
 
 def view_data_cli_path():
@@ -151,14 +154,22 @@ def edit_player_voted_out():
     alliance_data_editor.edit_player_voted_out_round(name, round)
 
 def edit_player_tribes():
-    round = input("Round (-1 for still in): ").strip()
+    round = input("Round: ").strip()
     if round == None:
         print("Fields can't be null")
         return
     alliance_data_editor.edit_player_tribes_at_round(round)
 
+def copy_player_tribes():
+    source = input("Source Round: ").strip()
+    target = input("Target Round: ").strip()
+    if round == None or target == None:
+        print("Fields can't be null")
+        return
+    alliance_data_editor.copy_player_tribes_to_round(source, target)
+
 def edit_round_dates():
-    round = input("Round (-1 for still in): ").strip()
+    round = input("Round: ").strip()
     if round == None:
         print("Fields can't be null")
         return

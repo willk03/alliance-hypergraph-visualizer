@@ -130,7 +130,7 @@ class AllianceDataEditor:
         ]
         
     def edit_player_voted_out_round(self, name, round_num):
-        player_id = self.get_player_id_from_name(player)
+        player_id = self.get_player_id_from_name(name)
         for node in self.data["nodes"]:
             if node["node"] == player_id:
                 node["attrs"]["voted-out-round"] = round_num
@@ -139,8 +139,19 @@ class AllianceDataEditor:
         
     def edit_player_tribes_at_round(self, round):
         for node in self.data["nodes"]:
+            voted = int(node["attrs"]["voted-out-round"])
+            if voted < int(round) and voted != -1:
+                continue
             tribe = input(f"{node["attrs"]["name"]}'s tribe: ")
             node["attrs"]["tribe"][round] = tribe
+    
+    def copy_player_tribes_to_round(self, source_round, target_round):
+        for node in self.data["nodes"]:
+            voted = int(node["attrs"]["voted-out-round"])
+            if voted < int(target_round) and voted != -1:
+                continue
+            print("its working")
+            node["attrs"]["tribe"][target_round] = node["attrs"]["tribe"][source_round]
     
     def date_to_round(self, date):
         current_round = None
@@ -160,7 +171,7 @@ class AllianceDataEditor:
             edge["attrs"]["created-round"] = self.date_to_round(edge["attrs"]["created"])
 
     def edit_round_start_date(self, round, date):
-        self.data["metadata"]["round-start"][round] = date
+        self.data["metadata"]["round-start"][round] = date.isoformat()
 
 if __name__ == "__main__":
     editor = AllianceDataEditor("sample_data/sample_alliances.json")
