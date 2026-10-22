@@ -42,9 +42,12 @@ def edit_data_cli_path():
         print("1. Add Alliance Chat")
         print("2. Remove Alliance Chat")
         print("3. Remove Player")
-        print("4. List Alliance Chats")
-        print("5. Save")
-        print("6. Back")
+        print("4. Edit Player Voted Out")
+        print("5. Edit Player Tribes")
+        print("6. Edit Round Dates")
+        print("7. List Alliance Chats")
+        print("8. Save")
+        print("9. Back")
 
         choice = input("Choose an option: ").strip()
 
@@ -55,10 +58,16 @@ def edit_data_cli_path():
         elif choice == "3":
             remove_player()
         elif choice == "4":
-            list_alliances()
+            edit_player_voted_out()
         elif choice == "5":
-            alliance_data_editor.save_data()
+            edit_player_tribes()
         elif choice == "6":
+            edit_round_dates()
+        elif choice == "7":
+            list_alliances()
+        elif choice == "8":
+            alliance_data_editor.save_data()
+        elif choice == "9":
             return
 
 def view_data_cli_path():
@@ -108,12 +117,12 @@ def edit_seed_cli_path():
     
 def add_alliance():
     name = input("Alliance Chat Name: ").strip()
-    round = input("Round Created: ").strip()
+    date = get_date_pattern()
     players = input("Players (seperated by ,): ").split(",")
-    if (name == None or round == None or players == None):
+    if (name == None or date == None or players == None):
         print("Fields can't be null")
         return
-    alliance_data_editor.create_alliance_chat(name, round, players)
+    alliance_data_editor.create_alliance_chat(name, date, players)
 
 def remove_alliance():
     name = input("Alliance Chat Name: ").strip()
@@ -129,6 +138,32 @@ def remove_player():
         print("Fields can't be null")
         return
     alliance_data_editor.remove_player(name)
+    
+def edit_player_voted_out():
+    name = input("Player Name: ").strip()
+    if name == None:
+        print("Fields can't be null")
+        return
+    round = input("Round (-1 for still in): ").strip()
+    if round == None:
+        print("Fields can't be null")
+        return
+    alliance_data_editor.edit_player_voted_out_round(name, round)
+
+def edit_player_tribes():
+    round = input("Round (-1 for still in): ").strip()
+    if round == None:
+        print("Fields can't be null")
+        return
+    alliance_data_editor.edit_player_tribes_at_round(round)
+
+def edit_round_dates():
+    round = input("Round (-1 for still in): ").strip()
+    if round == None:
+        print("Fields can't be null")
+        return
+    date = get_date_pattern()
+    alliance_data_editor.edit_round_start_date(round, date)
         
 def list_alliances():
     print()

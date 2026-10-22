@@ -129,7 +129,7 @@ class AllianceDataEditor:
             if incidence["edge"] not in removed_edges
         ]
         
-    def edit_player_voted_out_round(self, player, round_num):
+    def edit_player_voted_out_round(self, name, round_num):
         player_id = self.get_player_id_from_name(player)
         for node in self.data["nodes"]:
             if node["node"] == player_id:
