@@ -15,13 +15,36 @@ class AllianceDataEditor:
         with open(self.alliance_data_file, "w") as file:
             json.dump(self.data, file, indent=4)
 
-    def list_alliance_chats(self):
+    def list_alliance_chats(self, round):
+        round_edges = self.get_edge_list_by_round(round)
         alliance_chats = {
             f"{edge["attrs"]["name"]}: {", ".join(self.players_in_alliance(edge["edge"]))}"
-            for edge in self.data["edges"]
+            for edge in round_edges
         }
         alliance_chats = sorted(alliance_chats)
         print("\n".join(alliance_chats))
+    
+    def get_edge_list_by_round(self, round):
+        edges = [
+            edge
+            for edge in self.data["edges"]
+            if int(edge["attrs"]["created-round"]) <= int(round)
+        ]
+        players_left = [
+            player["node"]
+            for player in self.data["nodes"]
+            if player["attrs"]["voted-out-round"] == "-1" or int(player["attrs"]["voted-out-round"]) >= int(round)
+        ]
+        out = []
+        for edge in edges:
+            edge_in = True
+            for incidence in self.data["incidences"]:
+                if edge["edge"] == incidence["edge"] and incidence["node"] not in players_left:
+                    edge_in = False
+                    break
+            if edge_in:
+                out.append(edge)
+        return out
 
     def players_in_alliance(self, alliance_id):
         playerIDs = {
