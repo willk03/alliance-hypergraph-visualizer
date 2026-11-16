@@ -34,3 +34,8 @@ This lets me filter for round later but also keep everything in the same file so
 5) Edit CLI to ask for round when displaying graph
 6) Make visualizer a class
 7) Add graph type to cli
+
+
+saving for later:
+- Copy Tribes from previous round and only ask for new tribe if in the game
+- better catch for dupes

@@ -5,8 +5,9 @@ import alliance_data_visualizer
 from datetime import datetime
 import os
 import random
+import sys
 
-data_path = "sample_data/sample_alliances.json"
+data_path = sys.argv[1] if len(sys.argv) > 1 else "sample_data/sample_alliances.json"
 alliance_data_editor = AllianceDataEditor(data_path)
 alliance_data_editor.load_data()
 alliance_data_analyzer = AllianceDataAnalyzer(data_path)
@@ -90,13 +91,13 @@ def view_data_cli_path():
             list_alliances()
         if choice == "2":
             print() #newline
-            alliance_data_analyzer.print_sorted_degrees()
+            alliance_data_analyzer.print_sorted_degrees(input("Round: "))
         elif choice == "3":
-            alliance_data_visualizer.show_full_hypergraph(data_path, seed, k)
+            show_graph()
         elif choice == "4":
             show_tribe_graph()
         elif choice == "5":
-            alliance_data_visualizer.show_weighted_hypergraph(data_path, seed, k)
+            show_weighted_graph()
         elif choice == "6":
             show_weighted_tribe_graph()
         elif choice == "7":
@@ -178,15 +179,27 @@ def edit_round_dates():
         
 def list_alliances():
     print()
-    alliance_data_editor.list_alliance_chats()
+    round = input("Round: ")
+    print()
+    alliance_data_editor.list_alliance_chats(round)
+    
+def show_graph():
+    round = input("Round: ")
+    alliance_data_visualizer.show_full_hypergraph(data_path, round, seed, k)
     
 def show_tribe_graph():
     tribe = input("Tribe: ")
-    alliance_data_visualizer.show_tribe_hypergraph(data_path, seed, k, tribe)
+    round = input("Round: ")
+    alliance_data_visualizer.show_tribe_hypergraph(data_path, round, seed, k, tribe)
+    
+def show_weighted_graph():
+    round = input("Round: ")
+    alliance_data_visualizer.show_weighted_hypergraph(data_path, round, seed, k)
     
 def show_weighted_tribe_graph():
     tribe = input("Tribe: ")
-    alliance_data_visualizer.show_weighted_tribe_hypergraph(data_path, seed, k, tribe)
+    round = input("Round: ")
+    alliance_data_visualizer.show_weighted_tribe_hypergraph(data_path, round, seed, k, tribe)
     
 def change_seed():
     new_seed = int(input("New Seed: "))

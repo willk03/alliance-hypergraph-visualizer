@@ -14,6 +14,7 @@ import xgi
 
 def show_hypergraph(H, round, seed, k, title, is_weighted=False):
     H = filter_by_round(H, round)
+    
     labels = {node: str(int(node.removeprefix("player-0"))) for node in H.nodes}
 
     fig, ax = plt.subplots(figsize=(12, 8))
