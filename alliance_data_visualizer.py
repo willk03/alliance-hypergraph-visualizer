@@ -12,7 +12,9 @@ import xgi
 #set weights
 #draw with weights?
 
-def show_hypergraph(H, seed, k, title, is_weighted=False):
+def show_hypergraph(H, round, seed, k, title, is_weighted=False):
+    H = filter_by_round(H, round)
+    
     labels = {node: str(int(node.removeprefix("player-0"))) for node in H.nodes}
 
     fig, ax = plt.subplots(figsize=(12, 8))
@@ -32,7 +34,7 @@ def show_hypergraph(H, seed, k, title, is_weighted=False):
         )
         
         og_tribe_color = {
-            node: H["tribe-colors"][H.nodes[node]["og-tribe"]]
+            node: H["tribe-colors"][H.nodes[node]["tribe"]["1"]]
             for node in H.nodes
         }
                 
@@ -77,55 +79,65 @@ def show_hypergraph(H, seed, k, title, is_weighted=False):
     fig.tight_layout()
     plt.show()
     
-def show_full_hypergraph(path, seed, k):
+def show_full_hypergraph(path, round, seed, k):
     H = xgi.read_hif(path)
-    show_hypergraph(H, seed, k, "Players:")
+    show_hypergraph(H, round, seed, k, "Players:")
     
-def show_tribe_hypergraph(path, seed, k, tribe):
+def show_tribe_hypergraph(path, round, seed, k, tribe):
     H = xgi.read_hif(path)
+    H = filter_by_round(H, round)
     tribe_nodes = [
         node
         for node in H.nodes
-        if H.nodes[node]["tribe"] == tribe
+        if H.nodes[node]["tribe"][round] == tribe
     ]
         
     H = xgi.subhypergraph(H, tribe_nodes)
         
-    show_hypergraph(H, seed, k, f"{tribe}:")
+    show_hypergraph(H, round, seed, k, f"{tribe}:")
 
-def show_weighted_hypergraph(path, seed, k):
+def show_weighted_hypergraph(path, round, seed, k):
     H = xgi.read_hif(path)
     
-    max_round = (int)(max(H.edges.attrs("created_round").asdict().values()))
+    max_round = (int)(max(H.edges.attrs("created-round").asdict().values()))
     
     inverted_weights = {
-        edge_id: (max_round - (int)(value) + 1) for edge_id, value in H.edges.attrs("created_round")
+        edge_id: (max_round - (int)(value) + 1) for edge_id, value in H.edges.attrs("created-round")
     }
     
     H.set_edge_attributes(inverted_weights, name="weight")
     
-    show_hypergraph(H, seed, k, "Players:", is_weighted=True)
+    show_hypergraph(H, round, seed, k, "Players:", is_weighted=True)
     
-def show_weighted_tribe_hypergraph(path, seed, k, tribe):
+def show_weighted_tribe_hypergraph(path, round, seed, k, tribe):
     H = xgi.read_hif(path)
+    H = filter_by_round(H, round)
     tribe_nodes = [
         node
         for node in H.nodes
-        if H.nodes[node]["tribe"] == tribe
+        if H.nodes[node]["tribe"][round] == tribe
     ]
     
     H = xgi.subhypergraph(H, tribe_nodes)
     
-    max_round = (int)(max(H.edges.attrs("created_round").asdict().values()))
+    max_round = (int)(max(H.edges.attrs("created-round").asdict().values()))
     
     inverted_weights = {
-        edge_id: (max_round - (int)(value) + 1) for edge_id, value in H.edges.attrs("created_round")
+        edge_id: (max_round - (int)(value) + 1) for edge_id, value in H.edges.attrs("created-round")
     }
     
     H.set_edge_attributes(inverted_weights, name="weight")
         
-    show_hypergraph(H, seed, k, f"{tribe}:", is_weighted=True)
-    
+    show_hypergraph(H, round, seed, k, f"{tribe}:", is_weighted=True)
+
+def filter_by_round(H, round):
+    round_nodes = [
+        node
+        for node in H.nodes
+        if int(H.nodes[node]["voted-out-round"]) >= int(round) or H.nodes[node]["voted-out-round"] == "-1"
+    ]
+    return xgi.subhypergraph(H, round_nodes)
+
     
 if __name__ == "__main__":
-    show_weighted_hypergraph("data/season_19/r4_alliances.json", 41, 0.35)
+    show_weighted_hypergraph("data/season_19/season_19.json", 5, 41, 0.35)

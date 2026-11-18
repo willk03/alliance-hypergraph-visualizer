@@ -10,3 +10,7 @@ __pycache__/
 # Real Data That Should Not Be Public
 data/
 figures/
+
+# Executables
+*.sh
+*.command

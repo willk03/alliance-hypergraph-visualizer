@@ -5,6 +5,12 @@
         "tribe-colors": {
             "Red": "#c73c2a",
             "Black": "#6e6e6e"
+        },
+        "round-start": {
+            "1": "2026-10-01T18:00:00",
+            "2": "2026-10-04T19:30:00",
+            "3": "2026-10-08T17:00:00",
+            "4": "2026-10-12T20:00:00"
         }
     },
     "nodes": [
@@ -12,49 +18,70 @@
             "node": "player-001",
             "attrs": {
                 "name": "Will",
-                "tribe": "Red"
+                "tribe": {
+                    "1": "Red"
+                },
+                "voted-out-round": "-1"
             }
         },
         {
             "node": "player-002",
             "attrs": {
                 "name": "Zoe",
-                "tribe": "Red"
+                "tribe": {
+                    "1": "Red"
+                },
+                "voted-out-round": "-1"
             }
         },
         {
             "node": "player-003",
             "attrs": {
                 "name": "Courtney",
-                "tribe": "Black"
+                "tribe": {
+                    "1": "Black"
+                },
+                "voted-out-round": "-1"
             }
         },
         {
             "node": "player-004",
             "attrs": {
                 "name": "Dylan",
-                "tribe": "Black"
+                "tribe": {
+                    "1": "Black"
+                },
+                "voted-out-round": "-1"
             }
         },
         {
             "node": "player-005",
             "attrs": {
                 "name": "Alara",
-                "tribe": "Red"
+                "tribe": {
+                    "1": "Red"
+                },
+                "voted-out-round": "-1"
             }
         },
         {
             "node": "player-006",
             "attrs": {
                 "name": "Jaden",
-                "tribe": "Red"
+                "tribe": {
+                    "1": "Red"
+                },
+                "voted-out-round": "-1"
             }
         },
         {
             "node": "player-007",
             "attrs": {
                 "name": "Ryan",
-                "tribe": "Black"
+                "tribe": {
+                    "1": "Black"
+                },
+                "voted-out-round": "-1"
             }
         }
     ],
@@ -63,6 +90,7 @@
             "edge": "alliance-001",
             "attrs": {
                 "name": "FTC",
+                "created": "2026-10-01T18:00:00",
                 "created_round": "1"
             }
         },
@@ -70,6 +98,7 @@
             "edge": "alliance-002",
             "attrs": {
                 "name": "Love Island Rob Fan Club",
+                "created": "2026-10-04T19:30:00",
                 "created_round": "2"
             }
         },
@@ -77,6 +106,7 @@
             "edge": "alliance-003",
             "attrs": {
                 "name": "Sample Alliance Chat",
+                "created": "2026-10-01T18:00:00",
                 "created_round": "1"
             }
         },
@@ -84,6 +114,7 @@
             "edge": "alliance-004",
             "attrs": {
                 "name": "Sample Alliance Chat",
+                "created": "2026-10-04T19:30:00",
                 "created_round": "2"
             }
         },
@@ -91,13 +122,15 @@
             "edge": "alliance-005",
             "attrs": {
                 "name": "Sample Alliance Chat",
-                "created_round": "3"
+                "created": "2026-10-04T19:30:00",
+                "created_round": "2"
             }
         },
         {
             "edge": "alliance-006",
             "attrs": {
                 "name": "Sample Alliance Chat",
+                "created": "2026-10-04T19:30:00",
                 "created_round": "2"
             }
         },
@@ -105,6 +138,7 @@
             "edge": "alliance-007",
             "attrs": {
                 "name": "Best Three",
+                "created": "2026-10-01T18:00:00",
                 "created_round": "1"
             }
         },
@@ -112,6 +146,7 @@
             "edge": "alliance-008",
             "attrs": {
                 "name": "Besties",
+                "created": "2026-10-01T18:00:00",
                 "created_round": "1"
             }
         },
@@ -119,7 +154,8 @@
             "edge": "alliance-009",
             "attrs": {
                 "name": "f2",
-                "created_round": "4"
+                "created": "2026-10-04T19:30:00",
+                "created_round": "2"
             }
         }
     ],

@@ -2,10 +2,12 @@ from alliance_data_editor import AllianceDataEditor
 from alliance_data_analyzer import AllianceDataAnalyzer
 import alliance_data_visualizer
 
+from datetime import datetime
 import os
 import random
+import sys
 
-data_path = "sample_data/sample_alliances.json"
+data_path = sys.argv[1] if len(sys.argv) > 1 else "sample_data/sample_alliances.json"
 alliance_data_editor = AllianceDataEditor(data_path)
 alliance_data_editor.load_data()
 alliance_data_analyzer = AllianceDataAnalyzer(data_path)
@@ -41,9 +43,13 @@ def edit_data_cli_path():
         print("1. Add Alliance Chat")
         print("2. Remove Alliance Chat")
         print("3. Remove Player")
-        print("4. List Alliance Chats")
-        print("5. Save")
-        print("6. Back")
+        print("4. Edit Player Voted Out")
+        print("5. Edit Player Tribes")
+        print("6. Copy Player Tribes")
+        print("7. Edit Round Dates")
+        print("8. List Alliance Chats")
+        print("9. Save")
+        print("10. Back")
 
         choice = input("Choose an option: ").strip()
 
@@ -54,10 +60,18 @@ def edit_data_cli_path():
         elif choice == "3":
             remove_player()
         elif choice == "4":
-            list_alliances()
+            edit_player_voted_out()
         elif choice == "5":
-            alliance_data_editor.save_data()
+            edit_player_tribes()
         elif choice == "6":
+            copy_player_tribes()
+        elif choice == "7":
+            edit_round_dates()
+        elif choice == "8":
+            list_alliances()
+        elif choice == "9":
+            alliance_data_editor.save_data()
+        elif choice == "10":
             return
 
 def view_data_cli_path():
@@ -77,13 +91,13 @@ def view_data_cli_path():
             list_alliances()
         if choice == "2":
             print() #newline
-            alliance_data_analyzer.print_sorted_degrees()
+            alliance_data_analyzer.print_sorted_degrees(input("Round: "))
         elif choice == "3":
-            alliance_data_visualizer.show_full_hypergraph(data_path, seed, k)
+            show_graph()
         elif choice == "4":
             show_tribe_graph()
         elif choice == "5":
-            alliance_data_visualizer.show_weighted_hypergraph(data_path, seed, k)
+            show_weighted_graph()
         elif choice == "6":
             show_weighted_tribe_graph()
         elif choice == "7":
@@ -107,12 +121,12 @@ def edit_seed_cli_path():
     
 def add_alliance():
     name = input("Alliance Chat Name: ").strip()
-    round = input("Round Created: ").strip()
+    date = get_date_pattern()
     players = input("Players (seperated by ,): ").split(",")
-    if (name == None or round == None or players == None):
+    if (name == None or date == None or players == None):
         print("Fields can't be null")
         return
-    alliance_data_editor.create_alliance_chat(name, round, players)
+    alliance_data_editor.create_alliance_chat(name, date, players)
 
 def remove_alliance():
     name = input("Alliance Chat Name: ").strip()
@@ -128,18 +142,64 @@ def remove_player():
         print("Fields can't be null")
         return
     alliance_data_editor.remove_player(name)
+    
+def edit_player_voted_out():
+    name = input("Player Name: ").strip()
+    if name == None:
+        print("Fields can't be null")
+        return
+    round = input("Round (-1 for still in): ").strip()
+    if round == None:
+        print("Fields can't be null")
+        return
+    alliance_data_editor.edit_player_voted_out_round(name, round)
+
+def edit_player_tribes():
+    round = input("Round: ").strip()
+    if round == None:
+        print("Fields can't be null")
+        return
+    alliance_data_editor.edit_player_tribes_at_round(round)
+
+def copy_player_tribes():
+    source = input("Source Round: ").strip()
+    target = input("Target Round: ").strip()
+    if round == None or target == None:
+        print("Fields can't be null")
+        return
+    alliance_data_editor.copy_player_tribes_to_round(source, target)
+
+def edit_round_dates():
+    round = input("Round: ").strip()
+    if round == None:
+        print("Fields can't be null")
+        return
+    date = get_date_pattern()
+    alliance_data_editor.edit_round_start_date(round, date)
         
 def list_alliances():
     print()
-    alliance_data_editor.list_alliance_chats()
+    round = input("Round: ")
+    print()
+    alliance_data_editor.list_alliance_chats(round)
+    
+def show_graph():
+    round = input("Round: ")
+    alliance_data_visualizer.show_full_hypergraph(data_path, round, seed, k)
     
 def show_tribe_graph():
     tribe = input("Tribe: ")
-    alliance_data_visualizer.show_tribe_hypergraph(data_path, seed, k, tribe)
+    round = input("Round: ")
+    alliance_data_visualizer.show_tribe_hypergraph(data_path, round, seed, k, tribe)
+    
+def show_weighted_graph():
+    round = input("Round: ")
+    alliance_data_visualizer.show_weighted_hypergraph(data_path, round, seed, k)
     
 def show_weighted_tribe_graph():
     tribe = input("Tribe: ")
-    alliance_data_visualizer.show_weighted_tribe_hypergraph(data_path, seed, k, tribe)
+    round = input("Round: ")
+    alliance_data_visualizer.show_weighted_tribe_hypergraph(data_path, round, seed, k, tribe)
     
 def change_seed():
     new_seed = int(input("New Seed: "))
@@ -170,6 +230,14 @@ def change_path():
     alliance_data_editor = AllianceDataEditor(data_path)
     alliance_data_editor.load_data()
     alliance_data_analyzer = AllianceDataAnalyzer(data_path)
+    
+def get_date_pattern():
+    while True:
+        raw = input("Date (YYYY-MM-DD HH:MM): ").strip()
+        try:
+            return datetime.strptime(raw, "%Y-%m-%d %H:%M")
+        except ValueError:
+            print("Invalid date/time. Try again.")
     
 if __name__ == "__main__":
     main()

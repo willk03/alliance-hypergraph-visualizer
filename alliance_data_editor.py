@@ -1,4 +1,4 @@
-
+from datetime import datetime, timedelta, timezone
 import json
 
 class AllianceDataEditor:
@@ -15,13 +15,36 @@ class AllianceDataEditor:
         with open(self.alliance_data_file, "w") as file:
             json.dump(self.data, file, indent=4)
 
-    def list_alliance_chats(self):
+    def list_alliance_chats(self, round):
+        round_edges = self.get_edge_list_by_round(round)
         alliance_chats = {
             f"{edge["attrs"]["name"]}: {", ".join(self.players_in_alliance(edge["edge"]))}"
-            for edge in self.data["edges"]
+            for edge in round_edges
         }
         alliance_chats = sorted(alliance_chats)
         print("\n".join(alliance_chats))
+    
+    def get_edge_list_by_round(self, round):
+        edges = [
+            edge
+            for edge in self.data["edges"]
+            if int(edge["attrs"]["created-round"]) <= int(round)
+        ]
+        players_left = [
+            player["node"]
+            for player in self.data["nodes"]
+            if player["attrs"]["voted-out-round"] == "-1" or int(player["attrs"]["voted-out-round"]) >= int(round)
+        ]
+        out = []
+        for edge in edges:
+            edge_in = True
+            for incidence in self.data["incidences"]:
+                if edge["edge"] == incidence["edge"] and incidence["node"] not in players_left:
+                    edge_in = False
+                    break
+            if edge_in:
+                out.append(edge)
+        return out
 
     def players_in_alliance(self, alliance_id):
         playerIDs = {
@@ -36,7 +59,7 @@ class AllianceDataEditor:
             if player["node"] in playerIDs
         }
 
-    def create_alliance_chat(self, name, round_created, players):
+    def create_alliance_chat(self, name, date_created, players):
         if self.alliance_chat_exists(name):
             print("Alliance chat with that name already exists")
             choice = input("Do you still want to create it? (y/n) ").lower().strip()
@@ -52,7 +75,8 @@ class AllianceDataEditor:
             "edge": id,
             "attrs": {
                 "name": name,
-                "created_round": round_created
+                "created": date_created.isoformat(),
+                "created-round": self.date_to_round(date_created)
             }
         })
         for player in players:
@@ -127,14 +151,56 @@ class AllianceDataEditor:
             for incidence in self.data["incidences"]
             if incidence["edge"] not in removed_edges
         ]
-                
+        
+    def edit_player_voted_out_round(self, name, round_num):
+        player_id = self.get_player_id_from_name(name)
+        for node in self.data["nodes"]:
+            if node["node"] == player_id:
+                node["attrs"]["voted-out-round"] = round_num
+                return
+        print("Player Not Found")
+        
+    def edit_player_tribes_at_round(self, round):
+        for node in self.data["nodes"]:
+            voted = int(node["attrs"]["voted-out-round"])
+            if voted < int(round) and voted != -1:
+                continue
+            tribe = input(f"{node["attrs"]["name"]}'s tribe: ")
+            node["attrs"]["tribe"][round] = tribe
+    
+    def copy_player_tribes_to_round(self, source_round, target_round):
+        for node in self.data["nodes"]:
+            voted = int(node["attrs"]["voted-out-round"])
+            if voted < int(target_round) and voted != -1:
+                continue
+            print("its working")
+            node["attrs"]["tribe"][target_round] = node["attrs"]["tribe"][source_round]
+    
+    def date_to_round(self, date):
+        current_round = None
 
+        for round_num, start_date in sorted(self.data["metadata"]["round-start"].items()):
+            start = datetime.fromisoformat(start_date)
+
+            if start <= date:
+                current_round = round_num
+            else:
+                break
+
+        return current_round
+    
+    def refresh_alliance_round_created(self):
+        for edge in self.data["edges"]:
+            edge["attrs"]["created-round"] = self.date_to_round(edge["attrs"]["created"])
+
+    def edit_round_start_date(self, round, date):
+        self.data["metadata"]["round-start"][round] = date.isoformat()
 
 if __name__ == "__main__":
-    editor = AllianceDataEditor("data/test.json")
+    editor = AllianceDataEditor("sample_data/sample_alliances.json")
     editor.load_data()
-    editor.create_alliance_chat("test", 3, ["Will", "Zoe M"])
+    editor.create_alliance_chat("test", datetime.fromisoformat("2026-10-12T20:00:00"), ["Will", "Zoe"])
     editor.list_alliance_chats()
-    editor.remove_player("Courtney")
-    editor.list_alliance_chats()
+    print(editor.data["nodes"])
+    
 
